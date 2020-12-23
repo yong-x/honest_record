@@ -19,5 +19,7 @@ public interface IPowerService extends IService<Power> {
 
     public Page<Power> getPowerByPageNumber(int page);
 
+    public List<Power> getPowersByRid(int rid); //根据角色id查询所有权限
+
 
 }

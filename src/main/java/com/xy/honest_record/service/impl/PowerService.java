@@ -36,6 +36,11 @@ public class PowerService extends ServiceImpl<PowerMapper, Power> implements IPo
     }
 
     @Override
+    public List<Power> getPowersByRid(int rid) {
+        return powerMapper.getPowersByRid(rid);
+    }
+
+    @Override
     public Page<Power> getPowerByPageNumber(int pageno) {
 
         Page<Power> page = new Page<>(pageno,5);

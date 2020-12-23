@@ -23,12 +23,13 @@ public class RolePower implements Serializable {
     /**
      * 角色编号
      */
-    @TableId(value = "r_id", type = IdType.AUTO)
+    //@TableId(value = "r_id", type = IdType.AUTO)
     private Integer rId;
 
     /**
      * 权限编号
      */
+
     private String pId;
 
 

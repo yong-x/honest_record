@@ -10,7 +10,9 @@ public enum Code {
     INVALID_PARAM(2000,"非法参数"),
     UNAUTHENTICATED(3000,"此操作需要登陆系统"),
     UNAUTHORISE(4000,"权限不足，无权操作"),
-    SERVER_ERROR(5000,"抱歉，系统繁忙，请稍后重试");
+    USER_NOT_FOUND(5000,"找不到该用户"),
+    PASSWORD_ERROR(6000,"密码错误"),
+    SERVER_ERROR(7000,"抱歉，系统繁忙，请稍后重试");
 
     //操作代码
     int code;

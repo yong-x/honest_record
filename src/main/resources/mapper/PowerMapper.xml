@@ -6,4 +6,8 @@
     <select id="getPowerById" parameterType="java.lang.Integer" resultType="Power">
         select p_id,p_name,pp_id,create_time,update_time from power where p_id=#{pid}
     </select>
+    
+    <select id="getPowersByRid" parameterType="java.lang.Integer" resultType="Power">
+        select t1.p_id,t1.p_name,t1.pp_id,t1.create_time,t1.update_time from power t1,role_power t2 where t2.r_id=#{rid} and t1.p_id=t2.p_id
+    </select>
 </mapper>
