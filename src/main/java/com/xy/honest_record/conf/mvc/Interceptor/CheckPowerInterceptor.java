@@ -14,7 +14,7 @@ public class CheckPowerInterceptor implements HandlerInterceptor {
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
         System.out.println(request);
 
-        log.info("检查权限拦截器, CheckPowerInterceptor.... preHandle.....");
+        log.info("检查权限拦截器, CheckPowerInterceptor  preHandler.  RequestURI is"+request.getRequestURI());
 
         return true;
     }
