@@ -24,7 +24,7 @@ public class CheckTokenInterceptor implements HandlerInterceptor {
         // 所以 requestURI 可能为 /error 或者 真实客户端请求路径
         String requestURI = request.getRequestURI();
         //1、本拦截器不处理 /error 请求，会直接把 404 等错误抛给客户端
-        if(requestURI.equals("/error")){
+        if(requestURI.equals("/error") || request.getMethod().equals("OPTIONS")){
             return true;
         }
 

@@ -2,6 +2,8 @@ package com.xy.honest_record.entity;
 
 import com.baomidou.mybatisplus.annotation.IdType;
 import java.util.Date;
+
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import java.io.Serializable;
 import lombok.Data;
@@ -88,7 +90,7 @@ public class Faculty implements Serializable {
     private Date updateTime;
 
     /**
-     * 审核状态
+     * 审核状态，0表示未审核，1表示已经审核
      */
     private Integer checkState;
 
@@ -97,5 +99,11 @@ public class Faculty implements Serializable {
      */
     private Integer deleted;
 
+
+    /*
+    * 自添加字段必须 @TableField(exist = false) 注解标明
+    * */
+    @TableField(exist = false)
+    private Role role;
 
 }

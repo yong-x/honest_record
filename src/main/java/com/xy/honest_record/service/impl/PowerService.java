@@ -44,7 +44,6 @@ public class PowerService extends ServiceImpl<PowerMapper, Power> implements IPo
     public Page<Power> getPowerByPageNumber(int pageno) {
 
         Page<Power> page = new Page<>(pageno,5);
-        Map<String,Object> map = new HashMap<>();
         QueryWrapper<Power> queryWrapper = new QueryWrapper<>();
 
 

@@ -2,4 +2,37 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.xy.honest_record.mapper.FacultyMapper">
 
+    <resultMap id="FacultyMap" type="Faculty">
+        <id property="userId" column="user_id"></id>
+        <result property="dId" column="d_id"></result>
+        <result property="userName" column="user_name"></result>
+        <result property="password" column="password"></result>
+        <result property="gender" column="gender"></result>
+        <result property="idCard" column="id_card"></result>
+        <result property="phone" column="phone"></result>
+        <result property="position" column="position"></result>
+        <result property="workStartTime" column="work_start_time"></result>
+        <result property="workState" column="work_state"></result>
+        <result property="rId" column="r_id"></result>
+        <result property="createTime" column="create_time"></result>
+        <result property="updateTime" column="update_time"></result>
+        <result property="checkState" column="check_state"></result>
+        <result property="deleted" column="deleted"></result>
+
+        <association property="role" javaType="Role">
+            <id property="rId" column="rr_id"></id>
+            <result property="rName" column="r_name"></result>
+            <result property="createTime" column="r_create_time"></result>
+            <result property="updateTime" column="r_update_time"></result>
+        </association>
+    </resultMap>
+
+    <select id="allInfoQuery" resultMap="FacultyMap">
+        select f.user_id,f.d_id,f.user_name,f.password,f.gender,f.id_card,phone,position,work_start_time,work_state,f.r_id,f.create_time,f.update_time,check_state,deleted,
+              r.r_id as rr_id,r.r_name as r_name,r.create_time as r_create_time,r.update_time as r_update_time
+        from faculty f left join role r on f.r_id=r.r_id
+        <where>
+           ${ew.sqlSegment}
+        </where>
+    </select>
 </mapper>
