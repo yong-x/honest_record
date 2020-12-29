@@ -6,6 +6,8 @@ import java.util.Date;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import java.io.Serializable;
+
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
@@ -32,6 +34,12 @@ public class Faculty implements Serializable {
     /**
      * 所属部门编号
      */
+    /*
+    * 对于实体的属性字段，只有第一个字母和第二个字母全部都是小写的情况下，Jackson在序列化和反序列化时才能够找到其 set 方法。
+    * 所以此处对于不满足上述规则的属性字段，必须显示使用 @JsonProperty 注解标明其是一个属性。否则，Jackson不能正确序列化该属性。
+    * 在使用 @Requestbody 等注解时，不能把json对象属性dId 装配到 本属性上。
+    * */
+    @JsonProperty("dId")
     private Integer dId;
 
     /**
@@ -70,13 +78,14 @@ public class Faculty implements Serializable {
     private Integer workStartTime;
 
     /**
-     * 在职状态
+     * 在职状态,0在职，1离职
      */
     private Integer workState;
 
     /**
      * 所属角色编号
      */
+    @JsonProperty("rId")
     private Integer rId;
 
     /**
@@ -95,7 +104,7 @@ public class Faculty implements Serializable {
     private Integer checkState;
 
     /**
-     * 删除状态
+     * 删除状态,0表示未删除，1表示已删除
      */
     private Integer deleted;
 

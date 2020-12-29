@@ -7,8 +7,10 @@ import com.xy.honest_record.common.util.JWTutil;
 import com.xy.honest_record.common.vo.TokenPayload;
 import com.xy.honest_record.entity.Faculty;
 
+import com.xy.honest_record.entity.Power;
 import com.xy.honest_record.entity.Role;
 import com.xy.honest_record.mapper.FacultyMapper;
+import com.xy.honest_record.mapper.PowerMapper;
 import com.xy.honest_record.service.IFacultyService;
 import com.xy.honest_record.service.IPowerService;
 import com.xy.honest_record.service.IRoleService;
@@ -30,6 +32,9 @@ class HonestRecordApplicationTests {
 
     @Autowired
     IPowerService powerService;
+
+    @Resource
+    PowerMapper powerMapper;
 
     @Autowired
     IRoleService roleService;
@@ -83,6 +88,17 @@ class HonestRecordApplicationTests {
         List<Faculty> list = facultyMapper.allInfoQuery(page,wrapper).getRecords();
 
         System.out.println(list);
+    }
+
+    @Test
+    void testPowerList(){
+
+        List<Power> powers = powerService.getAllInfoPowersByRid(3);
+
+        powers.forEach(e-> System.out.println(e));
+
+
+
     }
 
 

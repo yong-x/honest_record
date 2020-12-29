@@ -4,6 +4,7 @@ package com.xy.honest_record.controller;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.xy.honest_record.common.vo.ResponseResult;
 import com.xy.honest_record.entity.Role;
+import com.xy.honest_record.service.IPowerService;
 import com.xy.honest_record.service.IRoleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -30,6 +31,9 @@ public class RoleController {
     @Autowired
     IRoleService roleService;
 
+    @Autowired
+    IPowerService powerService;
+
     @GetMapping("/query")
     public ResponseResult getRoleList(@RequestParam(value = "rId",required = false) Integer rId){
         List<Role> roleList = new ArrayList<>();
@@ -38,6 +42,9 @@ public class RoleController {
         }else{
             roleList.add(roleService.getById(rId));
         }
+        roleList.forEach(role->{
+            role.setPowerList(powerService.getAllInfoPowersByRid(role.getRId()));
+        });
         return ResponseResult.success(roleList);
     }
 }

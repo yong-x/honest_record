@@ -31,8 +31,8 @@ public class PowerService extends ServiceImpl<PowerMapper, Power> implements IPo
     PowerMapper powerMapper;
 
     @Override
-    public Power getPowerById(int pid) {
-        return powerMapper.getPowerById(pid);
+    public List<Power> getAllInfoPowersByRid(int rid) {
+        return powerMapper.getAllInfoPowersByRid(rid);
     }
 
     @Override
@@ -41,13 +41,10 @@ public class PowerService extends ServiceImpl<PowerMapper, Power> implements IPo
     }
 
     @Override
-    public Page<Power> getPowerByPageNumber(int pageno) {
-
-        Page<Power> page = new Page<>(pageno,5);
-        QueryWrapper<Power> queryWrapper = new QueryWrapper<>();
-
-
-        powerMapper.selectPage(page,queryWrapper);
+    public Page<Power> getPowersByPage(int pageNum, int pageSize, QueryWrapper<Power> queryWrapper) {
+        Page<Power> page = new Page<>(pageNum,pageSize);
+        page = powerMapper.selectPage(page,queryWrapper);
         return page;
     }
+
 }

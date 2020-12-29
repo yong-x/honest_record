@@ -2,8 +2,13 @@ package com.xy.honest_record.entity;
 
 import com.baomidou.mybatisplus.annotation.IdType;
 import java.util.Date;
+
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import java.io.Serializable;
+import java.util.List;
+
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
@@ -25,6 +30,7 @@ public class Role implements Serializable {
      * 角色编号
      */
     @TableId(value = "r_id", type = IdType.AUTO)
+    @JsonProperty("rId")
     private Integer rId;
 
     /**
@@ -42,5 +48,6 @@ public class Role implements Serializable {
      */
     private Date updateTime;
 
-
+    @TableField(exist = false)
+    private List<Power> powerList;//该角色拥有的权限列表
 }

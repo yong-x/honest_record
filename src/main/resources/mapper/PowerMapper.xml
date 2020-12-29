@@ -2,12 +2,34 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.xy.honest_record.mapper.PowerMapper">
 
+    <resultMap id="allInfoPowerResultMap" type="Power">
+        <id property="pId" column="p_id"></id>
+        <result property="pName" column="p_name"></result>
+        <result property="ppId" column="pp_id"></result>
+        <result property="createTime" column="create_time"></result>
+        <result property="updateTime" column="update_time"></result>
+        <result property="actionPath" column="action_path"></result>
+        <collection property="children" ofType="Power">
+            <id property="pId" column="cpid"></id>
+            <result property="pName" column="cpname"></result>
+            <result property="ppId" column="cppid"></result>
+            <result property="createTime" column="ccreatetime"></result>
+            <result property="updateTime" column="cupdatetime"></result>
+            <result property="actionPath" column="cactionpath"></result>
+        </collection>
+    </resultMap>
 
-    <select id="getPowerById" parameterType="java.lang.Integer" resultType="Power">
-        select p_id,p_name,pp_id,create_time,update_time from power where p_id=#{pid}
+    <select id="getAllInfoPowersByRid" parameterType="java.lang.Integer" resultMap="allInfoPowerResultMap">
+        select t.*, c.p_id as cpid,c.p_name as cpname,c.pp_id as cppid,c.create_time as ccreatetime,c.update_time as cupdatetime,c.action_path as cactionpath from
+        (select t1.p_id,t1.p_name,t1.pp_id,t1.create_time,t1.update_time,t1.action_path from power t1,role_power t2 where t2.r_id=#{rid} and t1.p_id=t2.p_id) as t
+        left JOIN  power as c on t.p_id=c.pp_id
+        WHERE c.p_id is not null
     </select>
-    
+
     <select id="getPowersByRid" parameterType="java.lang.Integer" resultType="Power">
         select t1.p_id,t1.p_name,t1.pp_id,t1.create_time,t1.update_time from power t1,role_power t2 where t2.r_id=#{rid} and t1.p_id=t2.p_id
     </select>
+
+
+
 </mapper>

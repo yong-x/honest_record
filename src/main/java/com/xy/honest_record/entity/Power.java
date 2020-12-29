@@ -7,6 +7,9 @@ import java.util.Date;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import java.io.Serializable;
+import java.util.List;
+
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
@@ -28,6 +31,7 @@ public class Power implements Serializable {
      * 权限编号
      */
     @TableId(value = "p_id", type = IdType.INPUT)
+    @JsonProperty("pId")
     private String pId;
 
     /**
@@ -56,5 +60,11 @@ public class Power implements Serializable {
      * 操作路径
      */
     private String actionPath;
+
+    /**
+     * 子权限集合
+     */
+    @TableField(exist = false)
+    private List<Power> children;
 
 }

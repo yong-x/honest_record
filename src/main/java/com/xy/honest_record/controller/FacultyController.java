@@ -19,10 +19,7 @@ import org.apache.velocity.util.ArrayListWrapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * <p>
@@ -75,7 +72,7 @@ public class FacultyController {
     }
 
     @GetMapping("/query")
-    public ResponseResult query(int pageNum,int pageSize,Faculty faculty){
+    public ResponseResult querylist(int pageNum,int pageSize,Faculty faculty){
 
         QueryWrapper<Faculty> wrapper = new QueryWrapper<>();
         wrapper.eq("deleted",0);
@@ -92,6 +89,9 @@ public class FacultyController {
         if(faculty.getUserName()!=null && faculty.getUserName().length()>0){
             wrapper.like("user_name",faculty.getUserName());
         }
+        wrapper.orderByDesc("update_time","create_time");
+
+
 
         //Page<Faculty> page = facultyService.getFacultysByPage(pageNum,pageSize,wrapper);
         Page<Faculty> page = facultyService.allInfoQueryByPage(pageNum,pageSize,wrapper);
@@ -112,5 +112,53 @@ public class FacultyController {
 
     }
 
+    @GetMapping("/query/{userid}")
+    public ResponseResult querybyId(@PathVariable("userid") int userid){
+        return ResponseResult.success(facultyService.getById(userid));
+    }
+
+    @PostMapping("/add")
+    public ResponseResult add(@RequestBody Faculty faculty){
+        System.out.println(faculty);
+
+        faculty.setCheckState(0);//未审核
+        faculty.setDeleted(0);//未删除
+        faculty.setCreateTime(new Date()); //创建时间
+        faculty.setUpdateTime(new Date()); //修改时间
+        boolean r = facultyService.save(faculty);
+        if(r){
+            return ResponseResult.success();
+        }else{
+            return ResponseResult.failure(Code.FAIL);
+        }
+
+    }
+
+    @PutMapping("/update")
+    public ResponseResult update(@RequestBody Faculty faculty){
+        faculty.setUpdateTime(new Date()); //修改时间
+        boolean r = facultyService.updateById(faculty);
+        if(r){
+            return ResponseResult.success();
+        }else{
+            return ResponseResult.failure(Code.FAIL);
+        }
+    }
+
+    @DeleteMapping("/delete/{userid}")
+    public ResponseResult deletebyId(@PathVariable("userid") int userid){
+        Faculty faculty = facultyService.getById(userid);
+        if(faculty!=null){
+            faculty.setDeleted(1); //软删除，删除操作变为更新操作
+            boolean r = facultyService.updateById(faculty);
+            if(r){
+                return ResponseResult.success();
+            }else{
+                return ResponseResult.failure(Code.FAIL);
+            }
+        }else{
+            return ResponseResult.failure(Code.USER_NOT_FOUND);
+        }
+    }
 }
 

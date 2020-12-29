@@ -3,6 +3,8 @@ package com.xy.honest_record.entity;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import java.io.Serializable;
+
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
@@ -24,12 +26,14 @@ public class RolePower implements Serializable {
      * 角色编号
      */
     //@TableId(value = "r_id", type = IdType.AUTO)
+    @JsonProperty("rId")
     private Integer rId;
 
     /**
      * 权限编号
      */
 
+    @JsonProperty("pId")
     private String pId;
 
 
