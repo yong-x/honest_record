@@ -25,4 +25,6 @@ public interface IPowerService extends IService<Power> {
 
     public List<Power> getAllInfoPowersByRid(int rid);
 
+    public List<Power> getAllInfoPowers();
+
 }

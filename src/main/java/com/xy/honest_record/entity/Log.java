@@ -4,6 +4,8 @@ import com.baomidou.mybatisplus.annotation.IdType;
 import java.util.Date;
 import com.baomidou.mybatisplus.annotation.TableId;
 import java.io.Serializable;
+
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
@@ -25,6 +27,7 @@ public class Log implements Serializable {
      * 日志编号
      */
     @TableId(value = "l_id", type = IdType.AUTO)
+    @JsonProperty("lId")
     private Long lId;
 
     /**

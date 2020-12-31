@@ -36,6 +36,7 @@ public class Role implements Serializable {
     /**
      * 角色名称
      */
+    @JsonProperty("rName")
     private String rName;
 
     /**

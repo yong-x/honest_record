@@ -47,4 +47,9 @@ public class PowerService extends ServiceImpl<PowerMapper, Power> implements IPo
         return page;
     }
 
+    @Override
+    public List<Power> getAllInfoPowers(){
+        return powerMapper.getAllInfoPowers();
+    }
+
 }

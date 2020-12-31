@@ -4,6 +4,8 @@ import com.baomidou.mybatisplus.annotation.IdType;
 import java.util.Date;
 import com.baomidou.mybatisplus.annotation.TableId;
 import java.io.Serializable;
+
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
@@ -25,6 +27,7 @@ public class Accusation implements Serializable {
      * 举报信息编号
      */
     @TableId(value = "a_id", type = IdType.AUTO)
+    @JsonProperty("aId")
     private Integer aId;
 
     /**

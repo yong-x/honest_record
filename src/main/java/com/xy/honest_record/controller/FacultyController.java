@@ -112,7 +112,7 @@ public class FacultyController {
 
     }
 
-    @GetMapping("/query/{userid}")
+    @GetMapping("/query/{userid}")//单个查询时可以查询出已经被删除了的对象，deleted=1
     public ResponseResult querybyId(@PathVariable("userid") int userid){
         return ResponseResult.success(facultyService.getById(userid));
     }

@@ -37,6 +37,7 @@ public class Power implements Serializable {
     /**
      * 权限名称
      */
+    @JsonProperty("pName")
     private String pName;
 
     /**

@@ -4,6 +4,9 @@ import com.baomidou.mybatisplus.annotation.IdType;
 import java.util.Date;
 import com.baomidou.mybatisplus.annotation.TableId;
 import java.io.Serializable;
+
+import com.fasterxml.jackson.annotation.JsonAutoDetect;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
@@ -25,6 +28,7 @@ public class Notice implements Serializable {
      * 通知编号
      */
     @TableId(value = "n_id", type = IdType.AUTO)
+    @JsonProperty("nId")
     private Integer nId;
 
     /**
@@ -55,6 +59,7 @@ public class Notice implements Serializable {
     /**
      * 通知类型
      */
+    @JsonProperty("nType")
     private Integer nType;
 
 

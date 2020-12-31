@@ -19,15 +19,24 @@
         </collection>
     </resultMap>
 
+
     <select id="getAllInfoPowersByRid" parameterType="java.lang.Integer" resultMap="allInfoPowerResultMap">
+        select t.*, c.p_id as cpid,c.p_name as cpname,c.pp_id as cppid,c.create_time as ccreatetime,c.update_time as cupdatetime,c.action_path as cactionpath
+        from (select * from power where pp_id is null) t
+        LEFT JOIN (select t1.p_id,t1.p_name,t1.pp_id,t1.create_time,t1.update_time,t1.action_path from power t1,role_power t2 where t2.r_id=#{rid} and t1.p_id=t2.p_id) c
+        on t.p_id = c.pp_id
+        where c.p_id is not null
+    </select>
+
+    <select id="getAllInfoPowers" resultMap="allInfoPowerResultMap">
         select t.*, c.p_id as cpid,c.p_name as cpname,c.pp_id as cppid,c.create_time as ccreatetime,c.update_time as cupdatetime,c.action_path as cactionpath from
-        (select t1.p_id,t1.p_name,t1.pp_id,t1.create_time,t1.update_time,t1.action_path from power t1,role_power t2 where t2.r_id=#{rid} and t1.p_id=t2.p_id) as t
+        (select t1.p_id,t1.p_name,t1.pp_id,t1.create_time,t1.update_time,t1.action_path from power t1) as t
         left JOIN  power as c on t.p_id=c.pp_id
         WHERE c.p_id is not null
     </select>
 
     <select id="getPowersByRid" parameterType="java.lang.Integer" resultType="Power">
-        select t1.p_id,t1.p_name,t1.pp_id,t1.create_time,t1.update_time from power t1,role_power t2 where t2.r_id=#{rid} and t1.p_id=t2.p_id
+        select t1.p_id,t1.p_name,t1.pp_id,t1.create_time,t1.update_time,t1.action_path from power t1,role_power t2 where t2.r_id=#{rid} and t1.p_id=t2.p_id
     </select>
 
 

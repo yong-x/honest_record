@@ -4,6 +4,8 @@ import com.baomidou.mybatisplus.annotation.IdType;
 import java.util.Date;
 import com.baomidou.mybatisplus.annotation.TableId;
 import java.io.Serializable;
+
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
@@ -25,21 +27,25 @@ public class Department implements Serializable {
      * 部门编号
      */
     @TableId(value = "d_id", type = IdType.AUTO)
+    @JsonProperty("dId")
     private Integer dId;
 
     /**
      * 部门名称
      */
+    @JsonProperty("dName")
     private String dName;
 
     /**
      * 联系方式
      */
+    @JsonProperty("dPhone")
     private String dPhone;
 
     /**
      * 联系地址
      */
+    @JsonProperty("dAddress")
     private String dAddress;
 
     /**

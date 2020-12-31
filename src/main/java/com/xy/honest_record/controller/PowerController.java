@@ -38,7 +38,7 @@ public class PowerController {
 
 
 
-    @GetMapping("/query")
+    @GetMapping("/query") //查询所有权限，以不包含子权限列表的形式
     public  ResponseResult querylist(int pageNum, int pageSize, Power power){
         QueryWrapper<Power> wrapper = new QueryWrapper<>();
         wrapper.like("p_name",power.getPName());
@@ -60,7 +60,18 @@ public class PowerController {
         return ResponseResult.success(rmap);
     }
 
-    @RequestMapping("/add")
+
+    @GetMapping("/query/{rid}") //通过角色rid查询所有权限，以包含子权限列表的形式
+    public  ResponseResult queryAllInfoPowerByRid(@PathVariable("rid") Integer rid){ //查询单个角色的全部消息，以包含子权限列表的形式
+        return ResponseResult.success(powerService.getAllInfoPowersByRid(rid));
+    }
+
+    @GetMapping("/query/all") //查询所有权限，以包含子权限列表的形式
+    public  ResponseResult queryAllInfoPowerByRid(){
+        return ResponseResult.success(powerService.getAllInfoPowers());
+    }
+
+    @RequestMapping("/add") //
     public Power addPower(){
         Power power = new Power();
 
@@ -71,14 +82,12 @@ public class PowerController {
     public Power updatePower(){
         Power power = new Power();
 
+
         return power;
     }
 
 
-    @GetMapping("/query/{rid}")
-    public  ResponseResult queryAllInfoPowerByRid(@PathVariable("rid") Integer rid){ //查询单个角色的全部消息，以包含子权限列表的形式
-        return ResponseResult.success(powerService.getAllInfoPowersByRid(rid));
-    }
+
 
 }
 
