@@ -2,6 +2,8 @@ package com.xy.honest_record.entity;
 
 import com.baomidou.mybatisplus.annotation.IdType;
 import java.util.Date;
+
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import java.io.Serializable;
 
@@ -96,4 +98,14 @@ public class Accusation implements Serializable {
     private Integer deleted;
 
 
+    @TableField(exist = false)
+    private Faculty faculty;//档案所属用户
+    @TableField(exist = false)
+    private ProblemField problemField;//档案所属问题领域
+    @TableField(exist = false)
+    private ProblemType problemType;//档案所属问题类型
+    @TableField(exist = false)
+    private AccuseType accuseType;//档案的举报类型
+    @TableField(exist = false)
+    private Faculty dealerFaculty; //档案受理人
 }

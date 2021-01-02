@@ -1,14 +1,17 @@
 package com.xy.honest_record;
 
 
+import cn.hutool.core.date.DateTime;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.xy.honest_record.common.util.JWTutil;
 import com.xy.honest_record.common.vo.TokenPayload;
+import com.xy.honest_record.entity.Accusation;
 import com.xy.honest_record.entity.Faculty;
 
 import com.xy.honest_record.entity.Power;
 import com.xy.honest_record.entity.Role;
+import com.xy.honest_record.mapper.AccusationMapper;
 import com.xy.honest_record.mapper.FacultyMapper;
 import com.xy.honest_record.mapper.PowerMapper;
 import com.xy.honest_record.service.IFacultyService;
@@ -41,6 +44,9 @@ class HonestRecordApplicationTests {
 
     @Resource
     FacultyMapper facultyMapper;
+
+    @Resource
+    AccusationMapper accusationMapper;
 
     @Test
     void contextLoads() {
@@ -98,6 +104,19 @@ class HonestRecordApplicationTests {
         powers.forEach(e-> System.out.println(e));
 
 
+
+    }
+
+    @Test
+    void testDate(){
+
+        Page<Accusation> page = new Page<>(1,3);
+        QueryWrapper<Accusation> wrapper = new QueryWrapper<>();
+        wrapper.like("accuser_name","三");
+
+        List<Accusation> list = accusationMapper.allInfoQuery(page,wrapper).getRecords();
+
+        list.forEach(System.out::println);
 
     }
 

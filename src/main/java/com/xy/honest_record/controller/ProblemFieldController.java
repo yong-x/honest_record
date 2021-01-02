@@ -33,9 +33,15 @@ public class ProblemFieldController {
     IProblemFieldService problemFieldService;
 
     @GetMapping("/query")
-    public ResponseResult querylist(int pageNum, int pageSize, ProblemField problemField){
+    public ResponseResult querylist(Integer pageNum, Integer pageSize, ProblemField problemField){
         QueryWrapper<ProblemField> wrapper = new QueryWrapper<>();
         wrapper.eq("deleted",0);
+
+        if(pageNum==null&&pageSize==null){ //非分页全部列表查询
+            return ResponseResult.success(problemFieldService.list(wrapper));
+        }
+
+
         wrapper.like("pf_name",problemField.getPfName());
         wrapper.orderByDesc("update_time","create_time");
         Page<ProblemField> page = new Page<>(pageNum,pageSize);

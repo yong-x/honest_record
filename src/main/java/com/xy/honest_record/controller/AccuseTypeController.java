@@ -33,9 +33,16 @@ public class AccuseTypeController {
     IAccuseTypeService accuseTypeService;
 
     @GetMapping("/query")
-    public ResponseResult querylist(int pageNum, int pageSize, AccuseType accuseType){
+    public ResponseResult querylist(Integer pageNum, Integer pageSize, AccuseType accuseType){
         QueryWrapper<AccuseType> wrapper = new QueryWrapper<>();
         wrapper.eq("deleted",0);
+
+        if(pageNum==null&&pageSize==null){ //非分页全部列表查询
+            return ResponseResult.success(accuseTypeService.list(wrapper));
+        }
+
+
+
         wrapper.like("at_name",accuseType.getAtName());
         wrapper.orderByDesc("update_time","create_time");
         Page<AccuseType> page = new Page<>(pageNum,pageSize);

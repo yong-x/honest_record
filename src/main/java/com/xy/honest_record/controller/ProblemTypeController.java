@@ -31,9 +31,16 @@ public class ProblemTypeController {
     IProblemTypeService problemTypeService;
 
     @GetMapping("/query")
-    public ResponseResult querylist(int pageNum, int pageSize, ProblemType problemType){
+    public ResponseResult querylist(Integer pageNum, Integer pageSize, ProblemType problemType){
         QueryWrapper<ProblemType> wrapper = new QueryWrapper<>();
         wrapper.eq("deleted",0);
+
+        if(pageNum==null&&pageSize==null){ //非分页全部列表查询
+            return ResponseResult.success(problemTypeService.list(wrapper));
+        }
+
+
+
         wrapper.like("pt_name",problemType.getPtName());
         wrapper.orderByDesc("update_time","create_time");
         Page<ProblemType> page = new Page<>(pageNum,pageSize);
