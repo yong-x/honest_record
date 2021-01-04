@@ -137,6 +137,7 @@ public class FacultyController {
     @PutMapping("/update")
     public ResponseResult update(@RequestBody Faculty faculty){
         faculty.setUpdateTime(new Date()); //修改时间
+
         boolean r = facultyService.updateById(faculty);
         if(r){
             return ResponseResult.success();

@@ -3,6 +3,7 @@ package com.xy.honest_record.controller;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.xy.honest_record.common.vo.Code;
 import com.xy.honest_record.common.vo.ResponseResult;
 import com.xy.honest_record.entity.Accusation;
 import com.xy.honest_record.entity.Department;
@@ -10,10 +11,7 @@ import com.xy.honest_record.service.IAccusationService;
 import com.xy.honest_record.service.IFacultyService;
 import com.xy.honest_record.service.impl.DepartmentService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Date;
 import java.util.HashMap;
@@ -100,5 +98,51 @@ public class AccusationController {
     }
 
 
+    @PostMapping("/add")
+    public ResponseResult add(@RequestBody Accusation accusation){
+        accusation.setDeleted(0);//未删除
+        accusation.setCheckState(0);//未审核
+        accusation.setCreateTime(new Date()); //创建时间
+        accusation.setUpdateTime(new Date()); //修改时间
+        boolean r = accusationService.save(accusation);
+        if(r){
+            return ResponseResult.success();
+        }else{
+            return ResponseResult.failure(Code.FAIL);
+        }
+    }
+
+    @GetMapping("/query/{id}") //单个查询时可以查询出已经被删除了的对象，deleted=1
+    public ResponseResult querybyId(@PathVariable("id") int id){
+        return ResponseResult.success(accusationService.getById(id));
+    }
+
+    @PutMapping("/update")
+    public ResponseResult update(@RequestBody Accusation accusation){
+        accusation.setUpdateTime(new Date()); //修改时间
+
+        boolean r = accusationService.updateById(accusation);
+        if(r){
+            return ResponseResult.success();
+        }else{
+            return ResponseResult.failure(Code.FAIL);
+        }
+    }
+
+    @DeleteMapping("/delete/{id}")
+    public ResponseResult deletebyId(@PathVariable("id") int id){
+        Accusation accusation = accusationService.getById(id);
+        if(accusation!=null){
+            accusation.setDeleted(1); //软删除，删除操作变为更新操作
+            boolean r = accusationService.updateById(accusation);
+            if(r){
+                return ResponseResult.success();
+            }else{
+                return ResponseResult.failure(Code.FAIL);
+            }
+        }else{
+            return ResponseResult.failure(Code.USER_NOT_FOUND);
+        }
+    }
 }
 

@@ -1,16 +1,16 @@
 package com.xy.honest_record;
 
 
+import cn.hutool.core.date.DateField;
 import cn.hutool.core.date.DateTime;
+import cn.hutool.core.date.DateUtil;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.xy.honest_record.common.util.JWTutil;
+import com.xy.honest_record.common.util.MyDateUtil;
 import com.xy.honest_record.common.vo.TokenPayload;
-import com.xy.honest_record.entity.Accusation;
-import com.xy.honest_record.entity.Faculty;
+import com.xy.honest_record.entity.*;
 
-import com.xy.honest_record.entity.Power;
-import com.xy.honest_record.entity.Role;
 import com.xy.honest_record.mapper.AccusationMapper;
 import com.xy.honest_record.mapper.FacultyMapper;
 import com.xy.honest_record.mapper.PowerMapper;
@@ -108,7 +108,7 @@ class HonestRecordApplicationTests {
     }
 
     @Test
-    void testDate(){
+    void testAccusationMapper(){
 
         Page<Accusation> page = new Page<>(1,3);
         QueryWrapper<Accusation> wrapper = new QueryWrapper<>();
@@ -117,6 +117,37 @@ class HonestRecordApplicationTests {
         List<Accusation> list = accusationMapper.allInfoQuery(page,wrapper).getRecords();
 
         list.forEach(System.out::println);
+
+    }
+    @Test
+    void testDate(){
+        List<MyDateUtil.DateRange> nearlyDays = MyDateUtil.getNearlyDays(5);
+
+//        nearlyDays.forEach(e->{
+//            System.out.println(e.getStartDate()+" 至 "+e.getEndDate());
+//        });
+
+//        List<MyDateUtil.DateRange> nearlyMonth = MyDateUtil.getNearlyMonth(10);
+//        nearlyMonth.forEach(e->{
+//            System.out.println(e.getStartDate()+" 至 "+e.getEndDate());
+//        });
+
+        List<MyDateUtil.DateRange> nearlyYear = MyDateUtil.getNearlyYear(5);
+        nearlyYear.forEach(e->{
+            System.out.println(e.getStartDate()+" 至 "+e.getEndDate());
+        });
+
+    }
+    @Test
+    void testAnalysis(){
+
+
+        DateTime startDate = DateUtil.parse("2021-01-02 14:10:10");
+        DateTime endDate = DateUtil.parse("2021-01-20 14:17:00");
+        //List<AnaysisDataVo> anaysisDataVos = accusationMapper.analysisByTableName("problem_type", "pt_id", "pt_name", startDate, endDate);
+        //List<AnaysisDataVo> anaysisDataVos = accusationMapper.analysisByTableName("problem_field", "pf_id", "pf_name", startDate, endDate);
+        List<AnaysisDataVo> anaysisDataVos = accusationMapper.analysisByTableName("accuse_type", "at_id", "at_name", null, null);
+        anaysisDataVos.forEach(System.out::println);
 
     }
 

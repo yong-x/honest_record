@@ -77,4 +77,25 @@
             ${ew.sqlSegment}
         </where>
     </select>
+
+    <select id="analysisByTableName" resultType="AnaysisDataVo">
+
+
+        select tem.${ForeignFeildName} as name,t.count as value
+        from (select ${ForeignId},count(${ForeignId}) as count from accusation
+        <where>
+            <if test="startDate!=null">
+                and accuse_date >= #{startDate}
+            </if>
+            <if test="endDate!=null">
+                and accuse_date &lt; #{endDate}
+            </if>
+        </where>
+        GROUP BY ${ForeignId}) t
+        LEFT JOIN ${ForeigntableName} tem on t.${ForeignId}=tem.${ForeignId}
+
+
+    </select>
+
+
 </mapper>
