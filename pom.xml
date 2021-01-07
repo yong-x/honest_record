@@ -65,6 +65,13 @@
             <version>5.5.4</version>
         </dependency>
 
+        <!--freemarker模板引擎，解析和生成 doc 文档-->
+        <dependency>
+            <groupId>org.freemarker</groupId>
+            <artifactId>freemarker</artifactId>
+            <version>2.3.28</version>
+        </dependency>
+
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>

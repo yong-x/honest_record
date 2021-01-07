@@ -28,6 +28,9 @@ public class CheckTokenInterceptor implements HandlerInterceptor {
             return true;
         }
 
+        if(requestURI.equals("/analysis/download")){
+            return true;
+        }
         String tokenStr = request.getHeader("Authorization");
         //2、请求头中没有token,且当前请求路径不是登录则拦截请求，返回未登录错误
         if(tokenStr==null && !requestURI.equals("/faculty/login")){
