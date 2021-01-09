@@ -10,6 +10,8 @@ import org.springframework.web.servlet.HandlerInterceptor;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.Arrays;
+import java.util.List;
 
 //检查请求头中是否有token,即该token是否正确
 
@@ -28,9 +30,12 @@ public class CheckTokenInterceptor implements HandlerInterceptor {
             return true;
         }
 
-        if(requestURI.equals("/analysis/download")){
+        //对于下面的请求无法验证token暂不拦截
+        List<String> noInterceptePathList = Arrays.asList("/analysis/download","/faculty/download");
+        if(noInterceptePathList.contains(requestURI)){
             return true;
         }
+
         String tokenStr = request.getHeader("Authorization");
         //2、请求头中没有token,且当前请求路径不是登录则拦截请求，返回未登录错误
         if(tokenStr==null && !requestURI.equals("/faculty/login")){

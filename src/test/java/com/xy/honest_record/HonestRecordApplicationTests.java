@@ -26,7 +26,7 @@ import java.util.*;
 
 import static com.xy.honest_record.common.util.JWTutil.getPayLoadFromToken;
 
-@SpringBootTest
+//@SpringBootTest
 class HonestRecordApplicationTests {
 
 
@@ -50,7 +50,13 @@ class HonestRecordApplicationTests {
 
     @Test
     void contextLoads() {
-
+        List<String> noInterceptePathList = Arrays.asList("/analysis/download","/faculty/decisionDownload");
+        String requestURI="/analysis/download";
+        if(noInterceptePathList.contains(requestURI)){
+            System.out.println("true");
+        }else{
+            System.out.println("false");
+        }
 
     }
 
@@ -148,6 +154,32 @@ class HonestRecordApplicationTests {
         //List<AnaysisDataVo> anaysisDataVos = accusationMapper.analysisByTableName("problem_field", "pf_id", "pf_name", startDate, endDate);
         List<AnaysisDataVo> anaysisDataVos = accusationMapper.analysisByTableName("accuse_type", "at_id", "at_name", null, null);
         anaysisDataVos.forEach(System.out::println);
+
+    }
+    @Test
+    void testDecision(){
+
+        QueryWrapper<Accusation> wrapper = new QueryWrapper<>();
+        wrapper.eq("accused_user_id",100019);
+        wrapper.orderByAsc("accuse_date");
+        Page<Accusation> page = new Page<>();
+
+        page = accusationMapper.allInfoQuery(page, wrapper);
+
+        //page.getRecords().forEach(System.out::println);
+
+        List<Accusation> list = page.getRecords();
+        System.out.println("收到的举报总数为 "+page.getTotal());
+        list.forEach(e->{
+            System.out.println("在"+DateUtil.format(e.getAccuseDate(),"yyyy年M月d日")+"收到举报，称该同志在"+e.getProblemField().getPfName()+"问题领域上存在"+e.getProblemType().getPtName()+"的问题；");
+        });
+
+
+
+
+
+
+
 
     }
 
