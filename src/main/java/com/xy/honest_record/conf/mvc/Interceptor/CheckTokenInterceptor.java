@@ -44,7 +44,7 @@ public class CheckTokenInterceptor implements HandlerInterceptor {
             ResponseResult  responseResult = ResponseResult.failure(Code.UNAUTHENTICATED);
             response.getWriter().write(JSONUtil.toJsonStr(responseResult));
             return false;
-        }else{//3、请求头中有 token，直接放行
+        }else{//3、请求头中有 token，或者当前为登录，则直接放行
             return true;
         }
     }

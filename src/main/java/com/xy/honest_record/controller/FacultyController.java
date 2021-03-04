@@ -31,6 +31,7 @@ import org.springframework.core.io.ClassPathResource;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
@@ -79,7 +80,7 @@ public class FacultyController {
 
 
     @RequestMapping("/login")
-    public ResponseResult login(@RequestBody Map<String,String> map){
+    public ResponseResult login(@RequestBody Map<String,String> map, HttpServletRequest request){
         int userId = Integer.parseInt(map.get("userId"));
         String password = map.get("password");
 
@@ -243,8 +244,6 @@ public class FacultyController {
         //生成word文档
         Boolean result = new WordUtils().writeWordReport(wordFilePath, wordFileName, templateFileName, dataMap);
         if (result) {
-
-
             return ResponseResult.success();
         } else {
 

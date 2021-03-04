@@ -6,6 +6,7 @@ import com.baomidou.mybatisplus.annotation.TableId;
 import java.io.Serializable;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import javafx.scene.control.Alert;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
@@ -51,9 +52,8 @@ public class Log implements Serializable {
     private String hostIp;
 
     /**
-     * 日志类型
+     * 日志类型,操作资源编号(登录日志时为用户编号，操作日志时为操作资源编号)
      */
     private String logType;
-
 
 }

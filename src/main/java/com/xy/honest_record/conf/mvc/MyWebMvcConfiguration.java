@@ -31,6 +31,7 @@ public class MyWebMvcConfiguration implements WebMvcConfigurer {
     public void addInterceptors(InterceptorRegistry registry) { //拦截器的执行顺序与加入顺序一致
         registry.addInterceptor(new CheckTokenInterceptor());
         registry.addInterceptor(new CheckPowerInterceptor());
+
     }
 
     /*

@@ -13,6 +13,7 @@ import com.xy.honest_record.service.impl.DepartmentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -99,14 +100,14 @@ public class AccusationController {
 
 
     @PostMapping("/add")
-    public ResponseResult add(@RequestBody Accusation accusation){
+    public ResponseResult add(@RequestBody Accusation accusation, HttpServletRequest request){
         accusation.setDeleted(0);//未删除
         accusation.setCheckState(0);//未审核
         accusation.setCreateTime(new Date()); //创建时间
         accusation.setUpdateTime(new Date()); //修改时间
         boolean r = accusationService.save(accusation);
         if(r){
-            return ResponseResult.success();
+            return ResponseResult.success(accusation);/////////////////////
         }else{
             return ResponseResult.failure(Code.FAIL);
         }
@@ -118,25 +119,25 @@ public class AccusationController {
     }
 
     @PutMapping("/update")
-    public ResponseResult update(@RequestBody Accusation accusation){
+    public ResponseResult update(@RequestBody Accusation accusation, HttpServletRequest request){
         accusation.setUpdateTime(new Date()); //修改时间
 
         boolean r = accusationService.updateById(accusation);
         if(r){
-            return ResponseResult.success();
+            return ResponseResult.success(accusation);//////////////////
         }else{
             return ResponseResult.failure(Code.FAIL);
         }
     }
 
     @DeleteMapping("/delete/{id}")
-    public ResponseResult deletebyId(@PathVariable("id") int id){
+    public ResponseResult deletebyId(@PathVariable("id") int id, HttpServletRequest request){
         Accusation accusation = accusationService.getById(id);
         if(accusation!=null){
             accusation.setDeleted(1); //软删除，删除操作变为更新操作
             boolean r = accusationService.updateById(accusation);
             if(r){
-                return ResponseResult.success();
+                return ResponseResult.success(accusation);//////////////////
             }else{
                 return ResponseResult.failure(Code.FAIL);
             }

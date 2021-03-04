@@ -26,6 +26,12 @@
             <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
 
+        <!-- 用于定义切面，对目标方法进行拦截，如记录Controller的方法返回值，记录日志 -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-aop</artifactId>
+        </dependency>
+
         <!-- mybatis-plus 启动器-->
         <dependency>
             <groupId>com.baomidou</groupId>
